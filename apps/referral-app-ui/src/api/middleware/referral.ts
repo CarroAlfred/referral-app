@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../services';
-import { FetchReferralsResponse, Referral } from '../../types/referral';
+import { FetchReferralsResponse, Referral } from '../../types';
 import { AxiosError } from 'axios';
 
 // Fetch referrals

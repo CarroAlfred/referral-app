@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction, isRejected, isFulfilled } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { Pagination } from '../../types/util';
-import { createReferral, deleteReferral, fetchReferrals, updateReferral } from '../../api/middleware/referral';
-import { ReferralState } from '../../types/referral';
+import { Pagination, ReferralState } from '../../types';
+import { createReferral, deleteReferral, fetchReferrals, updateReferral } from '../../api';
 
 const initialState: ReferralState = {
   referrals: [],
@@ -60,7 +59,7 @@ export const referralSlice = createSlice({
         state.pagination.total -= 1;
       })
 
-      // 🔥 Unified error handler
+      // Unified error handler
       .addMatcher(isRejected(fetchReferrals, createReferral, updateReferral, deleteReferral), (state, action) => {
         state.loading = false;
         state.error = (action.payload as string) || action.error.message || 'Something went wrong';
