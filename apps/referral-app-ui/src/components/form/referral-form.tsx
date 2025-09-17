@@ -163,7 +163,7 @@ export const ReferralForm: React.FC<ReferralFormProps> = ({ mode, initialData, o
         {/* Actions */}
         <div className='flex justify-end space-x-2'>
           <Button
-            variant='secondary'
+            variant='outline'
             onClick={onCancel}
           >
             Cancel

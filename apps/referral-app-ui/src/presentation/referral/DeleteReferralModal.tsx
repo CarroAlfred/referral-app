@@ -25,7 +25,7 @@ const DeleteReferralModal: React.FC<DeleteReferralModalProps> = ({ isOpen, onClo
         <div className='flex gap-2'>
           <Button
             onClick={onClose}
-            className='px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300'
+            variant='outline'
           >
             Cancel
           </Button>
