@@ -4,9 +4,6 @@
   "private": true,
   "packageManager": "pnpm@8.8.0",
   "scripts": {
-    "dev": "pnpm turbo run dev --parallel",
-    "dev:web": "pnpm turbo run dev --filter=referral-app-ui --parallel",
-    "dev:api": "pnpm turbo run dev --filter=referral-api --parallel",
     "build": "pnpm turbo run build",
     "lint": "pnpm turbo run lint",
     "test": "pnpm turbo run test"
