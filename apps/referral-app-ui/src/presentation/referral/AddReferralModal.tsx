@@ -1,8 +1,7 @@
 import React from 'react';
-import Modal from 'react-modal';
-import ReferralForm from './form/referral-form';
-import { useCreateReferral } from '../store/hooks/referrals/use-create-referral';
-import { ReferralFormData } from '../types/referral';
+import { CommonModal, Typography, ReferralForm } from '../../components';
+import { ReferralFormData } from '../../types';
+import { useCreateReferral } from '../../store';
 
 interface AddReferralModalProps {
   isOpen: boolean;
@@ -18,20 +17,18 @@ const AddReferralModal: React.FC<AddReferralModalProps> = ({ isOpen, onClose }) 
   };
 
   return (
-    <Modal
+    <CommonModal
       isOpen={isOpen}
-      onRequestClose={onClose}
-      overlayClassName='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center'
-      className='bg-white rounded-2xl shadow-lg max-w-2xl w-full p-6 overflow-y-auto max-h-[90vh]'
+      onClose={onClose}
     >
-      <h2 className='text-xl font-semibold text-gray-800 mb-4'>Add New Referral</h2>
+      <Typography variant='h2'>Add New Referral</Typography>
       <ReferralForm
         mode='create'
         isSubmitting={isLoading}
         onSubmit={handleCreate}
         onCancel={onClose}
       />
-    </Modal>
+    </CommonModal>
   );
 };
 

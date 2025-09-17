@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import ReferralTable from './ReferralTable';
 import AddReferralModal from './AddReferralModal';
 import EditReferralModal from './EditReferralModal';
 import DeleteReferralModal from './DeleteReferralModal';
-import { Referral } from '../types/referral';
-import { useReferrals } from '../store/hooks/referrals/use-get-referrals';
+import { Loader, Typography, Button, DataTable } from '../../components';
+import { useGetReferrals } from '../../store';
+import { Referral } from '../../types';
 
-const ReferralList: React.FC = () => {
+export const ReferralList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingReferral, setEditingReferral] = useState<Referral | null>(null);
   const [deletingReferral, setDeletingReferral] = useState<Referral | null>(null);
 
-  const { referrals, pagination, isLoading, refetch } = useReferrals();
+  const { referrals, pagination, isLoading, refetch } = useGetReferrals();
 
   const handleEdit = (referral: Referral) => {
     setEditingReferral(referral);
@@ -21,31 +21,42 @@ const ReferralList: React.FC = () => {
     const newOffset = (page - 1) * pagination.limit;
     refetch({ offset: newOffset, limit: pagination.limit });
   };
-  
+
   const handleDelete = (referral: Referral) => {
     setDeletingReferral(referral);
   };
 
-  if (isLoading) return <p className='p-4'>Loading...</p>;
-
   return (
     <div>
       <div className='flex justify-between items-center mb-4'>
-        <h1 className='text-2xl font-bold'>Referrals</h1>
-        <button
+        {isLoading && <Loader overlay />}
+        <Typography
+          variant='h1'
+          className='text-2xl font-bold'
+        >
+          Referrals
+        </Typography>
+        <Button
           onClick={() => setIsModalOpen(true)}
-          className='px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700'
+          variant='primary'
         >
           + Add Referral
-        </button>
+        </Button>
       </div>
 
-      <ReferralTable
-        referrals={referrals}
-        pagination={pagination}
-        onPageChange={handlePageChange}
+      <DataTable
+        data={referrals}
+        keyField='id'
+        columns={[
+          { header: 'Given Name', accessor: 'givenName' },
+          { header: 'Surname', accessor: 'surname' },
+          { header: 'Email', accessor: 'email' },
+          { header: 'Phone', accessor: 'phone' },
+        ]}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        pagination={pagination}
+        onPageChange={handlePageChange}
       />
 
       {/* Add referral modal */}
@@ -73,5 +84,3 @@ const ReferralList: React.FC = () => {
     </div>
   );
 };
-
-export default ReferralList;

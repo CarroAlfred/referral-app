@@ -1,7 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { fetchReferrals } from '../../../api/middleware/referral';
-import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 
 interface FetchParams {
@@ -10,7 +9,7 @@ interface FetchParams {
   offset?: number;
 }
 
-export const useReferrals = (params: FetchParams = {}) => {
+export const useGetReferrals = (params: FetchParams = {}) => {
   const dispatch = useAppDispatch();
 
   // Use Redux slice as source of truth

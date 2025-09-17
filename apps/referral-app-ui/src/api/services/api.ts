@@ -1,7 +1,10 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+const API_BASE_URL =
+  typeof window !== 'undefined'
+    ? (import.meta.env && import.meta.env.VITE_API_BASE_URL) || ''
+    : process.env.VITE_API_BASE_URL || '';
 
 const axiosClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -14,9 +17,13 @@ const axiosClient: AxiosInstance = axios.create({
 //  Request Interceptor
 axiosClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = import.meta.env.VITE_BEARER_TOKEN || '';
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const TOKEN =
+      typeof window !== 'undefined'
+        ? (import.meta.env && import.meta.env.VITE_BEARER_TOKEN) || ''
+        : process.env.VITE_BEARER_TOKEN || '';
+
+    if (TOKEN && config.headers) {
+      config.headers.Authorization = `Bearer ${TOKEN}`;
     }
 
     return config;
